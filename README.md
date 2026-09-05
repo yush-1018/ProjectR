@@ -132,7 +132,10 @@ Below are the **actual** measured results from running `python run.py`:
 | Total Duplicate Loss Prevented | **INR 24,943.11** |
 | Amount at Risk (Unresolved) | INR 20,593.86 |
 
-<!-- SCREENSHOT: paste terminal output screenshot here as ![Terminal Output](./screenshot.png) after uploading the image file to the repo root -->
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/98a92529-3db0-482a-8726-3aeb13b30587" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/003271df-9889-4979-a284-492771862094" />
+
+
 
 ---
 
