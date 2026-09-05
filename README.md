@@ -31,14 +31,21 @@ This is not a hypothetical bug. Razorpay's official WordPress/WooCommerce plugin
 
 ---
 
-## 3. What This Builds
+## 3. What This Builds & Design Philosophy
 
+### What This Builds
 A CLI-run reconciliation batch processor that:
 1. Ingests synthetic payment and webhook event streams (55 intent records).
 2. Performs **Rule-Based Reconciliation** (matching `intent_id`, evaluating inter-arrival time deltas, checking payload consistency).
 3. Routes ambiguous timing and payload edge cases to an **AI Classifier Layer** (Anthropic Claude API / OpenAI GPT-4o-mini with intelligent offline fallback).
 4. Computes **split performance metrics** -- rule-based match rate reported separately from AI-assisted resolutions, so numbers are never artificially inflated.
 5. Persists a full structured audit log (`logs/audit_log.json`) and a detailed summary report with an **Honest Exception List** (`reports/summary_report.md`).
+
+### Design Philosophy (4 Key Pillars)
+1. **Dual-Layer Efficiency**: High-speed, deterministic rules handle 90%+ clear transactions (0 latency, 0 API cost); LLM inference is reserved strictly for ambiguous exceptions.
+2. **Uncompromising Integrity**: Report an un-cherrypicked exception list with realistic match rates rather than forcing a deceptive 100% resolution.
+3. **Privacy by Design**: Strip real customer PII before invoking third-party AI APIs; send only anonymized transaction metadata and pattern flags.
+4. **Zero-Dependency Portability**: Keep the CLI core runnable out-of-the-box using standard Python libraries, with graceful offline fallbacks.
 
 ---
 
@@ -144,12 +151,13 @@ Track 04 judges require an honest, un-cherrypicked listing of exceptions that co
 
 ---
 
-## 9. Limitations & Production Roadmap
+## 9. Limitations & Known Caveats
 
-### Honest Limitations
+### Known Caveats & Honest Limitations
 1. **Simulated Webhook Lag**: Real-world network latency and server delays cannot be reliably forced in Razorpay test mode. Therefore, timing lag (0.5s-15.0s) and payload anomalies are deterministically simulated in `data/generate_data.py` with a fixed random seed for reproducibility.
 2. **Stateless JSON Storage**: For simplicity and zero-dependency execution, state is stored in JSON files rather than an ACID database like PostgreSQL or Redis.
-3. **Offline AI Fallback**: Without API keys, the AI classifier uses deterministic heuristic rules. Production deployment would use live LLM inference for richer reasoning.
+3. **Offline AI Fallback**: Without API keys (`ANTHROPIC_API_KEY` / `OPENAI_API_KEY`), the AI classifier uses deterministic heuristic rules. Production deployment would use live LLM inference for richer reasoning.
+4. **Batch Mode Processing**: Current implementation runs as a CLI batch script (`run.py`). Real-time streaming reconciliation would require event listener architecture.
 
 ### Data Privacy & PCI Considerations
 
@@ -174,4 +182,3 @@ To deploy this engine in a live production Razorpay environment:
 - **Kafka / SQS Stream Ingestion**: Connect the reconciler directly to a real-time message queue to process incoming webhooks with sub-millisecond overhead.
 - **Human-in-the-loop Dashboard**: Send low-confidence LLM exceptions directly to a Slack / Retool queue for finance manager approval.
 - **Payload Signature Verification**: Cross-reference webhook HMAC signatures to detect tampered or corrupted payloads before reconciliation.
-
