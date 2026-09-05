@@ -1,0 +1,398 @@
+{
+  "generated_at": "2026-09-05T16:03:21.132337",
+  "summary": {
+    "total_processed": 55,
+    "clean_count": 46,
+    "duplicates_prevented_count": 6,
+    "exception_count": 3,
+    "total_amount_saved_inr": 24943.11,
+    "match_rate_percent": 94.55
+  },
+  "records": [
+    {
+      "intent_id": "intent_001",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.79s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_002",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.78s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_003",
+      "status": "DUPLICATE_PREVENTED",
+      "confidence": 0.98,
+      "reasoning": "Detected 2 webhooks for same intent. Time gap between webhooks is 1.07s (< 10s rule limit). Duplicate order creation prevented.",
+      "amount_at_risk": 3863.25
+    },
+    {
+      "intent_id": "intent_004",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.45s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_005",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.90s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_006",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.99s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_007",
+      "status": "DUPLICATE_PREVENTED",
+      "confidence": 0.91,
+      "reasoning": "[AI Classifier] Intent intent_007 received 2 webhooks (initial delay 2.6s, retry gap 11.4s). Evaluated as late-arriving retry. DUPLICATE PREVENTED.",
+      "amount_at_risk": 653.79
+    },
+    {
+      "intent_id": "intent_008",
+      "status": "NEEDS_MANUAL_REVIEW",
+      "confidence": 0.4,
+      "reasoning": "[AI Classifier] Data Mismatch: Payment customer 'Dev Gupta' does not match webhook customer payload 'UNKNOWN (Meera Singh)'. Flagged for human review.",
+      "amount_at_risk": 9434.81
+    },
+    {
+      "intent_id": "intent_009",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.71s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_010",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.85s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_011",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.24s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_012",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.74s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_013",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 5.98s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_014",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 7.71s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_015",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.90s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_016",
+      "status": "NEEDS_MANUAL_REVIEW",
+      "confidence": 0.3,
+      "reasoning": "[AI Classifier] Intent intent_016 has 0 webhooks received despite payment creation timestamp (2026-09-05T10:00:55.256694+00:00). Requires manual gateway audit.",
+      "amount_at_risk": 1204.37
+    },
+    {
+      "intent_id": "intent_017",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.64s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_018",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.46s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_019",
+      "status": "DUPLICATE_PREVENTED",
+      "confidence": 0.98,
+      "reasoning": "Detected 2 webhooks for same intent. Time gap between webhooks is 3.73s (< 10s rule limit). Duplicate order creation prevented.",
+      "amount_at_risk": 1613.11
+    },
+    {
+      "intent_id": "intent_020",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.67s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_021",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.59s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_022",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.23s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_023",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 6.30s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_024",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.41s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_025",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 4.56s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_026",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.18s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_027",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.33s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_028",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.60s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_029",
+      "status": "DUPLICATE_PREVENTED",
+      "confidence": 0.91,
+      "reasoning": "[AI Classifier] Intent intent_029 received 2 webhooks (initial delay 2.6s, retry gap 12.2s). Evaluated as late-arriving retry. DUPLICATE PREVENTED.",
+      "amount_at_risk": 3371.24
+    },
+    {
+      "intent_id": "intent_030",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.21s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_031",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.65s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_032",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 6.65s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_033",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.10s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_034",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.79s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_035",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 4.25s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_036",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.58s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_037",
+      "status": "DUPLICATE_PREVENTED",
+      "confidence": 0.98,
+      "reasoning": "Detected 2 webhooks for same intent. Time gap between webhooks is 1.08s (< 10s rule limit). Duplicate order creation prevented.",
+      "amount_at_risk": 8376.67
+    },
+    {
+      "intent_id": "intent_038",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.75s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_039",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 5.12s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_040",
+      "status": "NEEDS_MANUAL_REVIEW",
+      "confidence": 0.35,
+      "reasoning": "[AI Classifier] Financial Discrepancy: Primary webhook amount (INR 9954.68) differs from secondary webhook amount (INR 4977.34). Potential partial capture / refund collision. Unresolved.",
+      "amount_at_risk": 9954.68
+    },
+    {
+      "intent_id": "intent_041",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.95s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_042",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.58s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_043",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 3.28s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_044",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.60s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_045",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.37s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_046",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 5.61s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_047",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.90s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_048",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.89s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_049",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.99s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_050",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 1.90s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_051",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.74s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_052",
+      "status": "DUPLICATE_PREVENTED",
+      "confidence": 0.98,
+      "reasoning": "Detected 2 webhooks for same intent. Time gap between webhooks is 0.53s (< 10s rule limit). Duplicate order creation prevented.",
+      "amount_at_risk": 7065.05
+    },
+    {
+      "intent_id": "intent_053",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.90s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_054",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 0.92s delay. Order matched.",
+      "amount_at_risk": 0.0
+    },
+    {
+      "intent_id": "intent_055",
+      "status": "CLEAN",
+      "confidence": 1.0,
+      "reasoning": "Single webhook received cleanly after 5.44s delay. Order matched.",
+      "amount_at_risk": 0.0
+    }
+  ]
+}
