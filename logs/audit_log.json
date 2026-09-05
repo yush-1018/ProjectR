@@ -1,12 +1,16 @@
 {
-  "generated_at": "2026-09-05T16:03:21.132337",
+  "generated_at": "2026-09-05T16:32:28.685362",
   "summary": {
     "total_processed": 55,
     "clean_count": 46,
-    "duplicates_prevented_count": 6,
-    "exception_count": 3,
+    "rule_duplicates_prevented": 4,
+    "exceptions_routed_to_ai": 5,
+    "ai_resolved_as_duplicate": 2,
+    "ai_unresolved_manual_review": 3,
     "total_amount_saved_inr": 24943.11,
-    "match_rate_percent": 94.55
+    "total_amount_at_risk_unresolved_inr": 20593.86,
+    "rule_match_rate_percent": 90.91,
+    "overall_resolution_rate_percent": 94.55
   },
   "records": [
     {
