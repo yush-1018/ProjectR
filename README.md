@@ -21,6 +21,12 @@ This is not a hypothetical bug. Razorpay's official WordPress/WooCommerce plugin
 - *"Fixed empty callback handling"*
 - *"Resolved double callback processing race condition"*
 
+### Industry Context: At-Least-Once Delivery by Design
+- **At-Least-Once Semantics**: Razorpay's official [Webhooks Best Practices Documentation](https://razorpay.com/docs/webhooks/best-practices) explicitly notes that webhooks operate on *at-least-once delivery semantics*. To ensure zero dropped events across distributed networks, payment platforms (including Razorpay, Stripe, and GitHub) guarantee delivery by accepting the possibility of duplicate callbacks.
+- **Automatic Retry Loops**: Razorpay's documentation explains that if a merchant's server does not acknowledge a callback within 5 seconds, the gateway marks the attempt as a timeout and resends the webhook payload — matching the network lag retry scenario simulated in this project.
+- **Merchant-Side Idempotency**: Razorpay explicitly recommends that merchants implement custom idempotency mechanisms (tracking headers like `x-razorpay-event-id` or transaction intent IDs) to detect and deduplicate retries before executing business logic.
+- **Bridging the Integration Gap**: This project builds the merchant-side idempotency and reconciliation engine recommended in Razorpay's integration guidelines — transforming a complex manual best practice into an automated, AI-assisted finance controller.
+
 ---
 
 ## 2. Why It Matters
