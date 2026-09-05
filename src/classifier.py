@@ -92,36 +92,78 @@ def _heuristic_fallback(payment: Payment, webhooks: List[Webhook]) -> Tuple[str,
     )
 
 
-def classify_exception(payment: Payment, webhooks: List[Webhook]) -> Tuple[str, str, float]:
+def _mask_customer_identity(customer_name: str, label: str) -> str:
     """
-    Evaluates an exception transaction using LLM API reasoning (Anthropic/OpenAI) or heuristic fallback.
-    Returns: (verdict: str, reasoning: str, confidence: float)
+    Masks real customer names before sending to external AI APIs.
+    Replaces PII with anonymized labels (e.g. 'Customer_Payment', 'Customer_Webhook')
+    so the AI can still detect mismatch patterns without receiving real names.
+    """
+    if not customer_name:
+        return label
+    return label
+
+
+def _build_api_prompt(payment: Payment, webhooks: List[Webhook]) -> str:
+    """
+    Constructs the prompt sent to external AI APIs (Anthropic/OpenAI).
+
+    PRIVACY DESIGN: This prompt is intentionally stripped of all PII.
+    - customer_name is replaced with anonymized labels ('Customer_Payment', 'Customer_Webhook_N')
+    - Only transaction metadata is sent: intent_id, amounts, timestamps, webhook counts, time gaps
+    - No card details, emails, phone numbers, or real names are ever sent to the API
     """
     sorted_wh = sorted(webhooks, key=lambda w: parse_iso(w.received_at)) if webhooks else []
-    webhook_summary = []
-    for w in sorted_wh:
+
+    # Build webhook summary with masked customer identifiers
+    webhook_lines = []
+    for i, w in enumerate(sorted_wh, 1):
         amt_str = f"INR {w.amount}" if w.amount is not None else "N/A"
-        cust_str = w.customer_name if w.customer_name else "N/A"
-        webhook_summary.append(f"  - Webhook ID: {w.webhook_id}, Event: {w.event_type}, Received: {w.received_at}, Amount: {amt_str}, Customer: {cust_str}")
+        # Mask: replace real customer name with anonymized label
+        masked_cust = _mask_customer_identity(w.customer_name, f"Customer_Webhook_{i}")
+        # Check if webhook customer matches payment customer (pass match/mismatch flag, not names)
+        cust_match_flag = ""
+        if w.customer_name and payment.customer_name:
+            if w.customer_name == payment.customer_name:
+                cust_match_flag = " [MATCHES payment customer]"
+            else:
+                cust_match_flag = " [MISMATCH with payment customer]"
+        webhook_lines.append(
+            f"  - Webhook {i}: ID={w.webhook_id}, Event={w.event_type}, "
+            f"Received={w.received_at}, Amount={amt_str}, "
+            f"Customer={masked_cust}{cust_match_flag}"
+        )
 
-    webhook_str = "\n".join(webhook_summary) if webhook_summary else "  - No webhooks received"
+    webhook_str = "\n".join(webhook_lines) if webhook_lines else "  - No webhooks received"
 
-    prompt = f"""
-Analyze the following payment reconciliation exception:
+    # Compute time gaps for the prompt (gives the AI concrete numbers to reason about)
+    time_analysis = ""
+    if len(sorted_wh) >= 2:
+        wh1_time = parse_iso(sorted_wh[0].received_at)
+        wh2_time = parse_iso(sorted_wh[1].received_at)
+        pay_time = parse_iso(payment.created_at)
+        gap = (wh2_time - wh1_time).total_seconds()
+        delay = (wh1_time - pay_time).total_seconds()
+        time_analysis = f"""
+Time Analysis:
+- Initial webhook delay after payment: {delay:.2f} seconds
+- Gap between webhook 1 and webhook 2: {gap:.2f} seconds
+"""
+
+    prompt = f"""Analyze the following payment reconciliation exception:
 
 Payment Intent Details:
 - Intent ID: {payment.intent_id}
 - Payment ID: {payment.payment_id}
 - Payment Amount: INR {payment.amount}
-- Customer Name: {payment.customer_name}
+- Customer: Customer_Payment (anonymized)
 - Created At: {payment.created_at}
 
 Received Webhooks ({len(sorted_wh)} total):
 {webhook_str}
-
+{time_analysis}
 Evaluation Criteria:
 1. If webhooks show matching amounts and timestamps indicate a delayed retry (gap 10-15s), classify as 'DUPLICATE_PREVENTED'.
-2. If webhooks show amount mismatches, customer metadata anomalies, or missing callbacks (0 webhooks), classify as 'NEEDS_MANUAL_REVIEW' (unresolved exception).
+2. If webhooks show amount mismatches, customer metadata anomalies (MISMATCH flag), or missing callbacks (0 webhooks), classify as 'NEEDS_MANUAL_REVIEW' (unresolved exception).
 
 Provide your decision in JSON format:
 {{
@@ -130,20 +172,37 @@ Provide your decision in JSON format:
   "confidence": float (0.0 to 1.0)
 }}
 """
+    return prompt
 
+
+def classify_exception(payment: Payment, webhooks: List[Webhook]) -> Tuple[str, str, float]:
+    """
+    Evaluates an exception transaction using LLM API reasoning (Anthropic/OpenAI) or heuristic fallback.
+
+    Privacy: When calling external APIs, all customer PII is masked. Only transaction metadata
+    (intent_id, amounts, timestamps, webhook counts, time gaps) and anonymized mismatch flags
+    are sent. Real customer names are only used in local heuristic fallback output (never sent externally).
+
+    Returns: (verdict: str, reasoning: str, confidence: float)
+    """
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
 
-    if anthropic_key:
-        try:
-            return _call_anthropic(prompt, anthropic_key)
-        except Exception:
-            pass
+    # Only build the API prompt (with masked PII) if we have an API key to call
+    if anthropic_key or openai_key:
+        prompt = _build_api_prompt(payment, webhooks)
 
-    if openai_key:
-        try:
-            return _call_openai(prompt, openai_key)
-        except Exception:
-            pass
+        if anthropic_key:
+            try:
+                return _call_anthropic(prompt, anthropic_key)
+            except Exception:
+                pass
 
+        if openai_key:
+            try:
+                return _call_openai(prompt, openai_key)
+            except Exception:
+                pass
+
+    # Fallback: heuristic reasoning runs locally — real names are safe here (never sent externally)
     return _heuristic_fallback(payment, webhooks)
